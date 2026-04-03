@@ -1,13 +1,7 @@
 import asyncio
-from openai import OpenAI
-import os
-
-API_BASE_URL = os.getenv("API_BASE_URL", "https://router.huggingface.co/v1")
-MODEL_NAME = os.getenv("MODEL_NAME", "Qwen/Qwen2.5-72B-Instruct")
-API_KEY = os.getenv("HF_TOKEN")
 
 def log_start():
-    print(f"[START] task=test env=openenv model={MODEL_NAME}", flush=True)
+    print("[START] task=test env=openenv model=dummy", flush=True)
 
 def log_step(step, action, reward, done, error=None):
     error_val = error if error else "null"
@@ -22,21 +16,13 @@ async def main():
     rewards = []
     steps = 0
 
-    try:
-        for i in range(3):
-            steps += 1
-            reward = 0.1 * i
-            rewards.append(reward)
-            log_step(steps, "test_action", reward, False)
+    for i in range(3):
+        steps += 1
+        reward = 0.1 * i
+        rewards.append(reward)
+        log_step(steps, "test_action", reward, False)
 
-        success = True
-
-    except Exception as e:
-        print(f"[DEBUG] {e}", flush=True)
-        success = False
-
-    finally:
-        log_end(success, steps, rewards)
+    log_end(True, steps, rewards)
 
 if __name__ == "__main__":
     asyncio.run(main())
