@@ -4,6 +4,6 @@ WORKDIR /app
 
 COPY . .
 
-RUN pip install openai
+RUN pip install fastapi uvicorn
 
-CMD ["python", "inference.py"]
+CMD ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "8000"]
